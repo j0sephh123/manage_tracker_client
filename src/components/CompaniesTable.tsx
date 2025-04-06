@@ -28,7 +28,7 @@ export function CompaniesTable() {
               <td>{company.employees}</td>
               <td>
                 <button
-                  className="btn btn-error btn-sm"
+                  className="btn btn-error btn-soft btn-sm"
                   onClick={() => removeCompany(company.id)}
                 >
                   Delete
