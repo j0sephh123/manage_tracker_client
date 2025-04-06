@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
-import { useCompanyStore } from "../store/companyStore";
+import { useCompanies } from "../hooks/useCompanies";
+import { useDeleteCompany } from "../hooks/useDeleteCompany";
+import { Loader2 } from "lucide-react";
 
 export function CompaniesTable() {
-  const { companies, removeCompany } = useCompanyStore();
+  const { data: companies = [], isLoading } = useCompanies();
+  const { mutate: deleteCompany, isPending, variables } = useDeleteCompany();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -29,9 +40,14 @@ export function CompaniesTable() {
               <td>
                 <button
                   className="btn btn-error btn-soft btn-sm"
-                  onClick={() => removeCompany(company.id)}
+                  onClick={() => deleteCompany(company.id)}
+                  disabled={isPending && variables === company.id}
                 >
-                  Delete
+                  {isPending && variables === company.id ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Delete"
+                  )}
                 </button>
               </td>
             </tr>
