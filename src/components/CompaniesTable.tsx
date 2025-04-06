@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCompanyStore } from "../store/companyStore";
 
 export function CompaniesTable() {
@@ -16,11 +17,18 @@ export function CompaniesTable() {
         <tbody>
           {companies.map((company) => (
             <tr key={company.id}>
-              <td>{company.name}</td>
+              <td>
+                <Link
+                  to={`/companies/${company.id}`}
+                  className="link link-primary"
+                >
+                  {company.name}
+                </Link>
+              </td>
               <td>{company.employees}</td>
               <td>
                 <button
-                  className="btn btn-soft btn-error btn-sm"
+                  className="btn btn-error btn-sm"
                   onClick={() => removeCompany(company.id)}
                 >
                   Delete
